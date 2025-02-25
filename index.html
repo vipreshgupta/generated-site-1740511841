@@ -1,0 +1,485 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Clone</title>
+    <style>
+        /* Reset and Basic Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #fafafa;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Utility Classes */
+        .container {
+            width: 100%;
+            max-width: 935px;
+            margin: 20px auto;
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        .justify-between {
+            justify-content: space-between;
+        }
+
+        .items-center {
+            align-items: center;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: #fff;
+            border-bottom: 1px solid #dbdbdb;
+            padding: 10px 20px;
+            width: 100%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo img {
+            height: 29px;
+        }
+
+        nav .nav-links a {
+            margin-left: 20px;
+            color: #262626;
+            text-decoration: none;
+            font-size: 20px;
+        }
+
+        nav .nav-links a:hover {
+            color: #8e8e8e;
+        }
+
+        /* Stories Section */
+        #stories {
+            background-color: #fff;
+            border: 1px solid #dbdbdb;
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .story {
+            display: inline-block;
+            margin-right: 10px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .story img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid #c62828;
+            padding: 2px;
+        }
+
+        .story p {
+            font-size: 12px;
+            color: #262626;
+        }
+
+        /* Main Feed */
+        main {
+            width: 100%;
+            max-width: 614px;
+        }
+
+        .post {
+            background-color: #fff;
+            border: 1px solid #dbdbdb;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .post-header {
+            padding: 10px;
+            align-items: center;
+        }
+
+        .post-header img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .post-image img {
+            width: 100%;
+            height: auto;
+        }
+
+        .post-actions {
+            padding: 10px;
+        }
+
+        .post-actions button {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .post-actions button:hover{
+            color: #8e8e8e;
+        }
+
+        .post-likes {
+            padding: 0 10px;
+            font-weight: bold;
+        }
+
+        .post-caption {
+            padding: 10px;
+        }
+
+        .post-caption strong {
+            margin-right: 5px;
+        }
+
+        /* Explore Page */
+        #explore {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            width: 100%;
+            max-width: 935px;
+        }
+
+        .explore-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .explore-item img:hover{
+            opacity: 0.8;
+        }
+
+        /* Notifications Page */
+        #notifications {
+            width: 100%;
+            max-width: 614px;
+        }
+
+        .notification {
+            background-color: #fff;
+            border: 1px solid #dbdbdb;
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .notification img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        /* Messages Page */
+        #messages {
+            width: 100%;
+            max-width: 614px;
+        }
+
+        .message {
+            background-color: #fff;
+            border: 1px solid #dbdbdb;
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .message img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        /* Reels Page */
+        #reels {
+            width: 100%;
+            max-width: 614px;
+        }
+
+        .reel {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .reel video {
+            width: 100%;
+            border-radius: 4px;
+        }
+
+        /* Settings Page */
+        #settings {
+            width: 100%;
+            max-width: 614px;
+        }
+
+        .setting-item {
+            background-color: #fff;
+            border: 1px solid #dbdbdb;
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        /* Footer */
+        footer {
+            width: 100%;
+            text-align: center;
+            padding: 20px;
+            color: #8e8e8e;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav .nav-links {
+                display: none; /* Hide links on small screens */
+            }
+
+            #explore {
+                grid-template-columns: repeat(2, 1fr); /* Two columns on smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="container flex justify-between items-center">
+            <div class="logo">
+                <img src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="Instagram Logo">
+            </div>
+            <div class="nav-links">
+                <a href="#"><i class="fas fa-home"></i></a>
+                <a href="#"><i class="far fa-compass"></i></a>
+                <a href="#"><i class="fas fa-film"></i></a>
+                <a href="#"><i class="far fa-heart"></i></a>
+                <a href="#"><i class="far fa-user"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Stories Section -->
+    <div class="container">
+        <section id="stories" class="flex">
+            <div class="story">
+                <img src="https://picsum.photos/id/1005/60/60" alt="User 1">
+                <p>User 1</p>
+            </div>
+            <div class="story">
+                <img src="https://picsum.photos/id/1010/60/60" alt="User 2">
+                <p>User 2</p>
+            </div>
+            <div class="story">
+                <img src="https://picsum.photos/id/1015/60/60" alt="User 3">
+                <p>User 3</p>
+            </div>
+            <div class="story">
+                <img src="https://picsum.photos/id/1020/60/60" alt="User 4">
+                <p>User 4</p>
+            </div>
+                        <div class="story">
+                <img src="https://picsum.photos/id/1005/60/60" alt="User 1">
+                <p>User 5</p>
+            </div>
+            <div class="story">
+                <img src="https://picsum.photos/id/1010/60/60" alt="User 2">
+                <p>User 6</p>
+            </div>
+            <div class="story">
+                <img src="https://picsum.photos/id/1015/60/60" alt="User 3">
+                <p>User 7</p>
+            </div>
+            <div class="story">
+                <img src="https://picsum.photos/id/1020/60/60" alt="User 4">
+                <p>User 8</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Feed Section -->
+    <div class="container">
+        <main>
+            <article class="post">
+                <header class="post-header flex items-center">
+                    <img src="https://picsum.photos/id/1005/30/30" alt="User 1">
+                    <strong>user1</strong>
+                </header>
+                <div class="post-image">
+                    <img src="https://picsum.photos/id/100/614/400" alt="Post 1">
+                </div>
+                <div class="post-actions">
+                    <button><i class="far fa-heart"></i></button>
+                    <button><i class="far fa-comment"></i></button>
+                    <button><i class="far fa-paper-plane"></i></button>
+                </div>
+                <div class="post-likes">
+                    100 likes
+                </div>
+                <div class="post-caption">
+                    <strong>user1</strong> Beautiful view!
+                </div>
+            </article>
+            <article class="post">
+                <header class="post-header flex items-center">
+                    <img src="https://picsum.photos/id/1010/30/30" alt="User 2">
+                    <strong>user2</strong>
+                </header>
+                <div class="post-image">
+                    <img src="https://picsum.photos/id/101/614/400" alt="Post 2">
+                </div>
+                <div class="post-actions">
+                    <button><i class="far fa-heart"></i></button>
+                    <button><i class="far fa-comment"></i></button>
+                    <button><i class="far fa-paper-plane"></i></button>
+                </div>
+                <div class="post-likes">
+                    200 likes
+                </div>
+                <div class="post-caption">
+                    <strong>user2</strong> Amazing shot!
+                </div>
+            </article>
+        </main>
+    </div>
+
+    <!-- Explore Page -->
+    <div class="container">
+        <section id="explore">
+            <div class="explore-item">
+                <img src="https://picsum.photos/id/200/300/300" alt="Explore 1">
+            </div>
+            <div class="explore-item">
+                <img src="https://picsum.photos/id/201/300/300" alt="Explore 2">
+            </div>
+            <div class="explore-item">
+                <img src="https://picsum.photos/id/202/300/300" alt="Explore 3">
+            </div>
+            <div class="explore-item">
+                <img src="https://picsum.photos/id/203/300/300" alt="Explore 4">
+            </div>
+            <div class="explore-item">
+                <img src="https://picsum.photos/id/204/300/300" alt="Explore 5">
+            </div>
+            <div class="explore-item">
+                <img src="https://picsum.photos/id/205/300/300" alt="Explore 6">
+            </div>
+        </section>
+    </div>
+
+    <!-- Notifications Page -->
+    <div class="container">
+        <section id="notifications">
+            <div class="notification">
+                <img src="https://picsum.photos/id/1005/40/40" alt="User 1">
+                <p><strong>user1</strong> liked your post.</p>
+            </div>
+            <div class="notification">
+                <img src="https://picsum.photos/id/1010/40/40" alt="User 2">
+                <p><strong>user2</strong> started following you.</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Messages Page -->
+    <div class="container">
+        <section id="messages">
+            <div class="message">
+                <img src="https://picsum.photos/id/1005/40/40" alt="User 1">
+                <p><strong>user1</strong>: Hi there!</p>
+            </div>
+            <div class="message">
+                <img src="https://picsum.photos/id/1010/40/40" alt="User 2">
+                <p><strong>user2</strong>: How are you?</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Reels Page -->
+    <div class="container">
+        <section id="reels">
+            <div class="reel">
+                <video controls>
+                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="reel">
+                <video controls>
+                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </section>
+    </div>
+
+    <!-- Settings Page -->
+    <div class="container">
+        <section id="settings">
+            <div class="setting-item">
+                <p>Account Settings</p>
+            </div>
+            <div class="setting-item">
+                <p>Privacy Settings</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 Instagram Clone</p>
+    </footer>
+
+    <script>
+        // Example JavaScript for like button functionality
+        document.querySelectorAll('.post-actions .fa-heart').forEach(button => {
+            button.addEventListener('click', function() {
+                this.classList.toggle('fas');
+                this.classList.toggle('far');
+                // Here you would typically update the like count via an API call
+            });
+        });
+    </script>
+    <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>
+
+</body>
+</html>
